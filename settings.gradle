@@ -1,2 +1,8 @@
+apply from: 'TerraCore/settings.gradle'
+
 rootProject.name = 'TerraClient'
+
+include 'terra-meshgen'
+include 'TerraCore'
+include 'terra-io-files'
 
