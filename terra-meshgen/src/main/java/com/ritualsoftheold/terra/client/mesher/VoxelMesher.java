@@ -1,4 +1,4 @@
-package com.ritualsoftheold.terra.mesher;
+package com.ritualsoftheold.terra.client.mesher;
 
 import com.ritualsoftheold.terra.core.chunk.ChunkLArray;
 

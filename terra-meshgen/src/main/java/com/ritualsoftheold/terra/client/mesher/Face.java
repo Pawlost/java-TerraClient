@@ -1,4 +1,4 @@
-package com.ritualsoftheold.terra.mesher;
+package com.ritualsoftheold.terra.client.mesher;
 
 import com.jme3.math.Vector3f;
 import com.ritualsoftheold.terra.core.materials.TerraObject;

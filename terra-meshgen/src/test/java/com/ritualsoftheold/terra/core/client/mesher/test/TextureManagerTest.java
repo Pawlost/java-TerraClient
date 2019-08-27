@@ -1,4 +1,4 @@
-package com.ritualsoftheold.terra.mesher.test;
+package com.ritualsoftheold.terra.core.client.mesher.test;
 
 /*
 public class TextureManagerTest extends SimpleApplication {
