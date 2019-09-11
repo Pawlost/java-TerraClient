@@ -10,7 +10,7 @@ allprojects{
     }
 
     dependencies{
-        compile project(':TerraCore')
+        compile project(':CentralConfig:TerraCore')
         testCompile group: 'junit', name: 'junit', version: '4.12'
     }
 }
