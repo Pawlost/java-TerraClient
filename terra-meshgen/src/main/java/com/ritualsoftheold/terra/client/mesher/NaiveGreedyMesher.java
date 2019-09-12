@@ -25,8 +25,12 @@ class NaiveGreedyMesher {
         //Creates voxels from BlockBuffer and set its object
         for (int i = 0; i < ChunkLArray.CHUNK_SIZE; i++) {
             TerraObject object = chunk.get(i);
-            if (object.getTexture() == null) {
-                continue;
+            try {
+                if (object.getTexture() == null) {
+                    continue;
+                }
+            }catch (NullPointerException exe){
+                System.out.println(exe);
             }
 
             if (object.hasMesh()) {
@@ -152,29 +156,33 @@ class NaiveGreedyMesher {
             }
             //&& buf.get(i + 64) != object*/ || z < 63
             // BACK
-            if (z == 63 || chunk.get(i + 4096).getTexture() == null || chunk.get(i + 4096).hasMesh()) {
-                Face face = new Face();
-                face.setObject(object);
-                face.setNormals(new Vector3f(0, 0, 1), new Vector3f(0, 0, 1), new Vector3f(0, 0, 1), new Vector3f(0, 0, 1));
-                HashMap<Integer, Face> side = sector.get(4);
-                face.setVector3f(x + 1, y, z + 1, 0);
-                face.setVector3f(x + 1, y + 1, z + 1, 1);
-                face.setVector3f(x, y + 1, z + 1, 2);
-                face.setVector3f(x, y, z + 1, 3);
-                side.put(i, face);
+            try {
+                if (z == 63 || chunk.get(i + 4096).getTexture() == null || chunk.get(i + 4096).hasMesh()) {
+                    Face face = new Face();
+                    face.setObject(object);
+                    face.setNormals(new Vector3f(0, 0, 1), new Vector3f(0, 0, 1), new Vector3f(0, 0, 1), new Vector3f(0, 0, 1));
+                    HashMap<Integer, Face> side = sector.get(4);
+                    face.setVector3f(x + 1, y, z + 1, 0);
+                    face.setVector3f(x + 1, y + 1, z + 1, 1);
+                    face.setVector3f(x, y + 1, z + 1, 2);
+                    face.setVector3f(x, y, z + 1, 3);
+                    side.put(i, face);
 
-                //Naive Greedy Meshing
-                if (i > 1) {
-                    Face previousFace = side.get(i - 1);
-                    if (previousFace != null && previousFace.getObject() == face.getObject()) {
-                        if (face.getVector3fs()[3].equals(previousFace.getVector3fs()[0]) &&
-                                face.getVector3fs()[2].equals(previousFace.getVector3fs()[1])) {
-                            face.setVector3f(previousFace.getVector3fs()[3], 3);
-                            face.setVector3f(previousFace.getVector3fs()[2], 2);
-                            side.remove(i - 1);
+                    //Naive Greedy Meshing
+                    if (i > 1) {
+                        Face previousFace = side.get(i - 1);
+                        if (previousFace != null && previousFace.getObject() == face.getObject()) {
+                            if (face.getVector3fs()[3].equals(previousFace.getVector3fs()[0]) &&
+                                    face.getVector3fs()[2].equals(previousFace.getVector3fs()[1])) {
+                                face.setVector3f(previousFace.getVector3fs()[3], 3);
+                                face.setVector3f(previousFace.getVector3fs()[2], 2);
+                                side.remove(i - 1);
+                            }
                         }
                     }
                 }
+            }catch (NullPointerException exe){
+                System.out.println(exe);
             }
 
             // FRONT
