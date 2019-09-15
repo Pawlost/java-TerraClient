@@ -1,8 +1,8 @@
-apply from: 'CentralConfig/settings.gradle'
+apply from: 'TerraCore/settings.gradle'
 
 rootProject.name = 'TerraClient'
 
 include 'terra-meshgen'
-include 'CentralConfig:TerraCore'
+include ':TerraCore',':TerraCore:3D-model-loader'
 include 'terra-io-files'
 

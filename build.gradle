@@ -10,7 +10,8 @@ allprojects{
     }
 
     dependencies{
-        compile project(':CentralConfig:TerraCore')
+        compile project(':TerraCore')
+        compile project(':TerraCore:3D-model-loader')
         testCompile group: 'junit', name: 'junit', version: '4.12'
     }
 }
