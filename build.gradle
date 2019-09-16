@@ -9,12 +9,14 @@ allprojects{
         jcenter()
     }
 
+    group 'com.ritualsoftheold'
+    version '1.0-SNAPSHOT'
+
     dependencies{
-        compile project(':TerraCore')
-        compile project(':TerraCore:3D-model-loader')
         testCompile group: 'junit', name: 'junit', version: '4.12'
     }
 }
 
-group 'com.ritualsoftheold'
-version '1.0-SNAPSHOT'
+dependencies{
+    compile project(':3D-model-loader:TerraCore')
+}
