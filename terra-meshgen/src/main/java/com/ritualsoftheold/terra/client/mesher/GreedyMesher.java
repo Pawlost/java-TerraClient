@@ -13,7 +13,6 @@ public class GreedyMesher {
 
     public GreedyMesher() {
         culling = new NaiveGreedyMesher();
-
     }
 
     public HashMap<Integer, HashMap<Integer, Face>> cull(ChunkLArray chunk) {
@@ -109,7 +108,7 @@ public class GreedyMesher {
                 faces.put(0, face);
                 cubeFaces.put(5, faces);
             }
-            
+
             chunk.free();
             cubeFaces.put(6, new HashMap<>());
             return cubeFaces;
@@ -147,7 +146,7 @@ public class GreedyMesher {
     }
 
     public void joinReversed(HashMap<Integer, Face> faces, int index, int side) {
-    int neighbor = 64;
+        int neighbor = 64;
         switch (side) {
             case 2:
             case 3:

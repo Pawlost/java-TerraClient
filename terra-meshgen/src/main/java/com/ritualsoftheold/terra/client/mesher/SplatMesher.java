@@ -2,6 +2,7 @@ package com.ritualsoftheold.terra.client.mesher;
 
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.ritualsoftheold.terra.core.DataConstants;
 import com.ritualsoftheold.terra.core.chunk.ChunkLArray;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class SplatMesher {
 
     public void chunk(ChunkLArray chunk, ArrayList<Vector3f> vector3fs, ArrayList<ColorRGBA> colors) {
 
-        for (int index = 0; index < ChunkLArray.CHUNK_SIZE; index++) {
+        for (int index = 0; index < DataConstants.CHUNK_SIZE; index++) {
             //Position of current voxel
             int z = index / 4096;
             int y = (index - 4096 * z) / 64;

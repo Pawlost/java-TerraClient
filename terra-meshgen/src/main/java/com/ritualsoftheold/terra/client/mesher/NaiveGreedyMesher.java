@@ -1,6 +1,7 @@
 package com.ritualsoftheold.terra.client.mesher;
 
 import com.jme3.math.Vector3f;
+import com.ritualsoftheold.terra.core.DataConstants;
 import com.ritualsoftheold.terra.core.chunk.ChunkLArray;
 import com.ritualsoftheold.terra.core.materials.TerraObject;
 
@@ -23,14 +24,11 @@ class NaiveGreedyMesher {
 
     HashMap<Integer, HashMap<Integer, Face>> cull(ChunkLArray chunk) {
         //Creates voxels from BlockBuffer and set its object
-        for (int i = 0; i < ChunkLArray.CHUNK_SIZE; i++) {
+        for (int i = 0; i < DataConstants.CHUNK_SIZE; i++) {
             TerraObject object = chunk.get(i);
-            try {
-                if (object.getTexture() == null) {
-                    continue;
-                }
-            }catch (NullPointerException exe){
-                System.out.println(exe);
+
+            if (object.getTexture() == null) {
+                continue;
             }
 
             if (object.hasMesh()) {
@@ -51,7 +49,7 @@ class NaiveGreedyMesher {
 
             // LEFT
             /*&& buf.get(i + 64) != object*/
-            if (x == 0 || chunk.get(i - 1).getTexture() == null || chunk.get(i - 1).hasMesh()) {
+            if (x == 0 || chunk.get(i - 1) != object) {
                 Face face = new Face();
                 HashMap<Integer, Face> side = sector.get(0);
                 face.setObject(object);
@@ -78,7 +76,7 @@ class NaiveGreedyMesher {
 
             // RIGHT
             /*&& buf.get(i + 64) != object*/
-            if (x == 63 || chunk.get(i + 1).getTexture() == null || chunk.get(i + 1).hasMesh()) {
+            if (x == 63 || chunk.get(i + 1) != object) {
                 Face face = new Face();
                 face.setObject(object);
                 face.setNormals(new Vector3f(1, 0, 0), new Vector3f(1, 0, 0), new Vector3f(1, 0, 0), new Vector3f(1, 0, 0));
@@ -104,7 +102,7 @@ class NaiveGreedyMesher {
             }
 
             // TOP
-            if (y == 63 || chunk.get(i + 64).getTexture() == null || chunk.get(i + 64).hasMesh()) {
+            if (y == 63 || chunk.get(i + 64) != object) {
                 Face face = new Face();
                 face.setObject(object);
                 face.setNormals(new Vector3f(0, 1, 0), new Vector3f(0, 1, 0), new Vector3f(0, 1, 0), new Vector3f(0, 1, 0));
@@ -130,7 +128,7 @@ class NaiveGreedyMesher {
             }
 
             // BOTTOM
-            if (y == 0 || y > 0 && chunk.get(i - 64).getTexture() == null || chunk.get(i - 64).hasMesh()) {
+            if (y == 0 || y > 0 && chunk.get(i - 64) != object) {
                 Face face = new Face();
                 face.setObject(object);
                 face.setNormals(new Vector3f(0, -1, 0), new Vector3f(0, -1, 0), new Vector3f(0, -1, 0), new Vector3f(0, -1, 0));
@@ -156,8 +154,7 @@ class NaiveGreedyMesher {
             }
             //&& buf.get(i + 64) != object*/ || z < 63
             // BACK
-            try {
-                if (z == 63 || chunk.get(i + 4096).getTexture() == null || chunk.get(i + 4096).hasMesh()) {
+                if (z == 63 || chunk.get(i + 4096) != object) {
                     Face face = new Face();
                     face.setObject(object);
                     face.setNormals(new Vector3f(0, 0, 1), new Vector3f(0, 0, 1), new Vector3f(0, 0, 1), new Vector3f(0, 0, 1));
@@ -181,12 +178,9 @@ class NaiveGreedyMesher {
                         }
                     }
                 }
-            }catch (NullPointerException exe){
-                System.out.println(exe);
-            }
 
             // FRONT
-            if (z == 0 || chunk.get(i - 4096).getTexture() == null || chunk.get(i - 4096).hasMesh()) {
+            if (z == 0 || chunk.get(i - 4096) != object) {
                 Face face = new Face();
                 face.setObject(object);
                 face.setNormals(new Vector3f(0, 0, -1), new Vector3f(0, 0, -1), new Vector3f(0, 0, -1), new Vector3f(0, 0, -1));
@@ -211,6 +205,7 @@ class NaiveGreedyMesher {
                 }
             }
         }
+
         chunk.free();
         return sector;
     }
